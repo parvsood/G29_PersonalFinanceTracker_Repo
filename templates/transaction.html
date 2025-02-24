@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Transactions - Finance Tracker
+{% endblock %}
+
+{% block content %}
+<style>
+    /* Style for the popup window */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    .popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        width: 400px;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    /* Ensure table design is clean */
+    table th, table td {
+        vertical-align: middle;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+    }
+
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .pagination {
+        margin-top: 20px;
+    }
+
+    /* Adjust clear filter button alignment */
+    .clear-btn {
+        margin-left: 10px;
+    }
+</style>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h2>Transactions</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-primary" onclick="openPopup()">Add Transaction</button>
+        <button class="btn btn-success" onclick="downloadCSV()"><i class="fa-solid fa-file-arrow-down"></i> CSV</button>
+    </div>
+</div>
+
+<!-- Search Filters -->
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form method="get" action="{{ url_for('transactions') }}">
+            <div class="row mb-3 d-flex align-items-center">
+                <div class="col-md-3">
+                    <input type="text" name="search_term" class="form-control" placeholder="Search by category or amount" value="{{ request.args.get('search_term', '') }}">
+                </div>
+                <div class="col-md-2 d-flex" style="width: max-content;">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date" class="form-control" id="start_date" value="{{ request.args.get('start_date', '') }}">
+                </div>
+                <div class="col-md-2 d-flex" style="width: max-content;">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" name="end_date" class="form-control" id="end_date" value="{{ request.args.get('end_date', '') }}">
+                </div>
+                <div class="col-md-2">
+                    <select name="transaction_type" class="form-control">
+                        <option value="">All Types</option>
+                        <option value="Income" {% if request.args.get('transaction_type') == 'Income' %}selected{% endif %}>Income</option>
+                        <option value="Expense" {% if request.args.get('transaction_type') == 'Expense' %}selected{% endif %}>Expense</option>
+                    </select>
+                </div>
+                <div class="col-md-1 text-center">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+                <div class="col-md-1 text-center">
+                    <a href="{{ url_for('transactions') }}" class="btn btn-primary">Clear</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Payment Method</th>
+            <th>Description</th>
+            <th>Transaction Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction[4] }}</td> <!-- Date -->
+            <td>{{ transaction[3] }}</td> <!-- Category -->
+            <td class="text-right">{{ '{:,.2f}'.format(transaction[2]) }}</td> <!-- Amount -->
+            <td>{{ transaction[6] }}</td> <!-- Payment Method -->
+            <td>{{ transaction[5] }}</td> <!-- Description -->
+            <td>{{ transaction[7] }}</td> <!-- Transaction Type -->
+            <td>
+                <form action="{{ url_for('delete_transaction', transaction_id=transaction[0]) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination Controls -->
+<div class="mt-4">
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('transactions', page=page-1, search_term=request.args.get('search_term', ''), start_date=request.args.get('start_date', ''), end_date=request.args.get('end_date', ''), transaction_type=request.args.get('transaction_type', '')) }}">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {% if p == page %}active{% endif %}">
+                <a class="page-link" href="{{ url_for('transactions', page=p, search_term=request.args.get('search_term', ''), start_date=request.args.get('start_date', ''), end_date=request.args.get('end_date', ''), transaction_type=request.args.get('transaction_type', '')) }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page < total_pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('transactions', page=page+1, search_term=request.args.get('search_term', ''), start_date=request.args.get('start_date', ''), end_date=request.args.get('end_date', ''), transaction_type=request.args.get('transaction_type', '')) }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<!-- Popup window -->
+<div id="popup" class="popup">
+    <div class="popup-content p-4">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <!-- Form for adding transaction -->
+        <form action="{{ url_for('add_transaction') }}" method="post">
+            <div class="mb-3">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" name="category" class="form-select" required>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Food">Food</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Education">Education</option>
+                    <option value="Travel expenses">Travel expenses</option>
+                    <option value="Gifts">Gifts</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Subscriptions">Subscriptions</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount:</label>
+                <input type="number" id="amount" name="amount" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="payment_method" class="form-label">Payment Method:</label>
+                <select id="payment_method" name="payment_method" class="form-select" required>
+                    <option value="UPI">UPI</option>
+                    <option value="Cash">Cash</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="notes" class="form-label">Notes:</label>
+                <textarea id="notes" name="notes" class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="transaction_type" class="form-label">Transaction Type:</label>
+                <select name="transaction_type" class="form-select" id="transaction_type">
+                    <option value="Expense">Expense</option>
+                    <option value="Income">Income</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Transaction</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openPopup() {
+        document.getElementById("popup").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
+
+    function downloadCSV() {
+        const rows = document.querySelectorAll('table tbody tr');
+        let csvContent = 'Date,Category,Amount,Payment Method,Notes,Transaction Type\n';
+        rows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            const rowData = Array.from(columns).map(column => column.textContent.replace(/\n/g, '').replace('₹', ''));
+            csvContent += rowData.join(',') + '\n';
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = 'transactions.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+
+{% endblock %}

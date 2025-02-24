@@ -1,0 +1,322 @@
+<!-- Add Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- HTML -->
+<div class="error-container">
+    <div class="error-box">
+        <div class="content-wrapper">
+            <div class="left-section">
+                <div class="robot">
+                    <div class="antenna"></div>
+                    <div class="head">
+                        <div class="eye left"></div>
+                        <div class="eye right"></div>
+                        <div class="mouth"></div>
+                    </div>
+                    <div class="body">
+                        <div class="arm left"></div>
+                        <div class="arm right"></div>
+                    </div>
+                    <div class="leg left"></div>
+                    <div class="leg right"></div>
+                </div>
+                <p class="robot-message">Beep Boop! 👋</p>
+            </div>
+            
+            <div class="right-section">
+                <h1>404</h1>
+                <h2>Page Not Found</h2>
+                <p class="description">Oops! This URL doesn't exist in our financial universe.</p>
+                
+                <div class="url-box">
+                    <p class="invalid-url" id="invalidUrl">Loading...</p>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="./index.html" class="home-button primary">Back to Home Page</a>
+                    <a href="/support" class="home-button secondary">Need Help?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #f0f2f5;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .error-container {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .error-box {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        width: 100%;
+        border: 2px solid #000;
+    }
+
+    .content-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .left-section {
+        flex: 0 0 auto;
+        text-align: center;
+    }
+
+    .right-section {
+        flex: 1;
+    }
+
+    .robot-message {
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    h1 {
+        font-size: 72px;
+        color: #000;
+        margin-bottom: 5px;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    h2 {
+        font-size: 24px;
+        color: #000;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    .description {
+        color: #666;
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+
+    .url-box {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .invalid-url {
+        color: #000;
+        margin: 0;
+        word-break: break-all;
+        font-family: monospace;
+        font-size: 13px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .home-button {
+        padding: 8px 20px;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .home-button.primary {
+        background: #000;
+        color: white;
+    }
+
+    .home-button.secondary {
+        background: white;
+        color: #000;
+        border: 2px solid #000;
+    }
+
+    .home-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Robot Styles */
+    .robot {
+        width: 100px;
+        height: 150px;
+        position: relative;
+        animation: dance 2s infinite;
+    }
+
+    .antenna {
+        width: 3px;
+        height: 15px;
+        background: #000;
+        position: absolute;
+        top: -15px;
+        left: 48px;
+    }
+
+    .head {
+        width: 50px;
+        height: 50px;
+        background: #000;
+        border-radius: 12px;
+        position: relative;
+        margin: 0 auto;
+    }
+
+    .eye {
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 15px;
+    }
+
+    .eye.left {
+        left: 10px;
+        animation: blink 2s infinite;
+    }
+
+    .eye.right {
+        right: 10px;
+        animation: blink 2s infinite;
+    }
+
+    .mouth {
+        width: 20px;
+        height: 5px;
+        background: white;
+        position: absolute;
+        bottom: 10px;
+        left: 15px;
+        border-radius: 3px;
+    }
+
+    .body {
+        width: 65px;
+        height: 65px;
+        background: #000;
+        margin: 8px auto;
+        border-radius: 12px;
+        position: relative;
+    }
+
+    .arm {
+        width: 15px;
+        height: 50px;
+        background: #000;
+        position: absolute;
+        top: 8px;
+        border-radius: 8px;
+    }
+
+    .arm.left {
+        left: -20px;
+        animation: wave 1s infinite;
+        transform-origin: top center;
+    }
+
+    .arm.right {
+        right: -20px;
+        animation: wave 1s infinite;
+        animation-delay: 0.5s;
+        transform-origin: top center;
+    }
+
+    .leg {
+        width: 15px;
+        height: 35px;
+        background: #000;
+        position: absolute;
+        bottom: 0;
+        border-radius: 8px;
+    }
+
+    .leg.left {
+        left: 20px;
+        animation: step 1s infinite;
+    }
+
+    .leg.right {
+        right: 20px;
+        animation: step 1s infinite;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes dance {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    @keyframes wave {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(30deg); }
+    }
+
+    @keyframes step {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(15deg); }
+    }
+
+    @keyframes blink {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(0.1); }
+    }
+
+    @media (max-width: 600px) {
+        .content-wrapper {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .action-buttons {
+            justify-content: center;
+        }
+
+        .error-box {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 60px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+    }
+</style>
+
+<script>
+    window.onload = function() {
+        document.getElementById('invalidUrl').textContent = window.location.href;
+    }
+</script>

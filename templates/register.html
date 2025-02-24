@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Your existing CSS remains unchanged */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('/Finance-Tracker-main/static/images/wp2939900.webp') center/cover no-repeat fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .registration-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            overflow: hidden;
+            width: 90%;
+            max-width: 1200px;
+            min-height: 600px;
+            display: flex;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .welcome-panel {
+            flex: 1;
+            background: #000;
+            color: white;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), transparent);
+            z-index: 1;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .form-panel {
+            flex: 1;
+            padding: 4rem 3rem;
+            background: white;
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #000;
+            margin-bottom: 2rem;
+        }
+
+        .form-floating {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-floating input {
+            border: 2px solid #eee;
+            border-radius: 15px;
+            height: 60px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-floating input:focus {
+            border-color: #000;
+            box-shadow: none;
+        }
+
+        .form-floating label {
+            padding: 1rem 1.25rem;
+        }
+
+        .btn-register {
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1rem;
+        }
+
+        .login-link a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #333;
+        }
+
+        .alert {
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: none;
+        }
+
+        @media (max-width: 992px) {
+            .registration-container {
+                flex-direction: column;
+            }
+            
+            .welcome-panel, .form-panel {
+                padding: 3rem 2rem;
+            }
+            
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container animate__animated animate__fadeIn">
+        <div class="welcome-panel">
+            <div class="decorative-circle circle-1"></div>
+            <div class="decorative-circle circle-2"></div>
+            <div class="welcome-content">
+                <h1 class="welcome-title animate__animated animate__fadeInUp">Welcome to T₹ACKER Community !</h1>
+                <p class="welcome-text animate__animated animate__fadeInUp">
+                    We're thrilled to have you join our community! 
+                    Sign up to start tracking, budgeting, and achieving your financial goals with ease.
+                    Your journey to smarter spending and saving begins now. Let's create a brighter financial future together!
+                </p>
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <h2 class="form-title animate__animated animate__fadeInDown">Create Account</h2>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} animate__animated animate__fadeIn">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('register') }}" method="post">
+                <div class="form-floating animate__animated animate__fadeInUp">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+                    <label for="username">Username</label>
+                </div>
+                
+                <div class="form-floating animate__animated animate__fadeInUp">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                    <label for="email">Email</label>
+                </div>
+                
+                <div class="form-floating animate__animated animate__fadeInUp">
+                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone" required>
+                    <label for="phone">Phone</label>
+                </div>
+                
+                <div class="form-floating animate__animated animate__fadeInUp">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                    <label for="password">Password</label>
+                </div>
+                
+                <button type="submit" class="btn btn-register animate__animated animate__fadeInUp">
+                    Join Now
+                </button>
+            </form>
+            
+            <div class="login-link animate__animated animate__fadeIn">
+                Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add animation to form inputs
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('animate__animated', 'animate__pulse');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('animate__animated', 'animate__pulse');
+            });
+        });
+
+        // Smooth form submission animation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const button = this.querySelector('.btn-register');
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

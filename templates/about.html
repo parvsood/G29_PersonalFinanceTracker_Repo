@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap" rel="stylesheet">
+    <button id="theme-toggle">Theme</button>
+    <style>
+        body {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+}
+h1, h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 900; /* Bold */
+    font-size: 48px;
+}
+p {
+    font-family: 'Sora', sans-serif;
+    font-weight: 400; /* Regular */
+    font-size: 20px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.container {
+    max-width: 700px;
+    text-align: left;
+}
+
+/* Key Image */
+.key-image {
+    width: 900px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+/* Date */
+.date {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Title */
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #222;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+/* Author Section */
+.author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.author-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #222;
+}
+
+.author-role {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Description */
+.description {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Privacy Section */
+.privacy-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #ddd;
+}
+
+.subheading {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.privacy-text {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.privacy-list {
+    list-style: none;
+}
+
+.privacy-list li {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+/* Bullet Points */
+.privacy-list li::before {
+    content: "•";
+    color: #555;
+    font-size: 18px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+}
+
+/* Links */
+.privacy-list a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.privacy-list a:hover {
+    text-decoration: underline;
+}
+.privacy-design {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #ddd;
+}
+
+.privacy-design .subheading {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.privacy-text {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.privacy-list {
+    list-style: none;
+}
+
+.privacy-list li {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+/* Bullet Points */
+.privacy-list li::before {
+    content: "•";
+    color: #555;
+    font-size: 18px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+}
+
+/* Links */
+.privacy-text a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.privacy-text a:hover {
+    text-decoration: underline;
+}
+#Flyup{
+    position: absolute;
+    top: 20px; 
+    left: 40px; 
+    align-items: center;
+    appearance: none;
+    background-color: #fff;
+    border-radius: 24px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: #3c4043;
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: .25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    z-index: 1000; 
+}
+:root {
+    --bg-color: white;
+    --text-color: black;
+}
+
+.dark-theme {
+    --bg-color: black;
+    --text-color: white;
+}
+.dark-theme p {
+    color: white;
+}
+p {
+    color: black 
+}
+.dark-theme .title {
+    color:#E8CC96 ;
+}
+.dark-theme .subheading {
+    color:#E8CC96 ;
+}
+.dark-mode #theme-toggle{
+    background-color: #22222200;
+    color: #E8CC96;
+}
+.dark-mode #Flyup{
+    background-color: #22222200;
+    color: #E8CC96;
+}
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+#theme-toggle {
+    position: absolute;
+    top: 20px; 
+    left: 30px; 
+    align-items: center;
+    appearance: none;
+    background-color: #fff;
+    border-radius: 24px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: #3c4043;
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: .25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    z-index: 1000; 
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Key Illustration -->
+        <img src="/Finance-Tracker-main/static/images/mon.jpg" alt="Key Illustration" class="key-image">
+
+        <!-- Article Content -->
+        <div class="article-content">
+            <p class="date">JANUARY 31ST, 2025</p>
+            <h1 class="title">To separate anxiety from money</h1>
+
+            <!-- Author Section -->
+            <div class="author">
+                <img src="static/images/jw.jpg" alt="Author Image" class="author-img">
+                <div class="author-info">
+                    <p class="author-name">Satvik Sharma</p>
+                    <p class="author-role">Co-Founder, CEO</p>
+                </div>
+            </div>
+
+            <!-- Article Text -->
+            <p class="description">
+                Being a human on earth in 2025 or in any year post, say 7 BCE guarantees having a relationship with money. The nature of that relationship is different for each one of us. But without exception an accompanying factor of anyone's relationship with money, either a constant or appearing, disappearing and reappearing, is anxiety.
+
+Where does this anxiety come from?
+
+It's the result of either a relationship with money that's not healthy or because of the lack of it. When there's anxiety due to the lack of money we know what we need to do, find ways to increase our income. But when the anxiety is despite having a source of income, then what can we do?
+
+It's Monday morning after a weekend of night-out, you open an app to check your bank balance, anxiety. The month is nearing an end, you check your balance to realise you don't even know where all the money went, anxiety. You overshot your mental budget for eating out in the first 10 days of the month, anxiety. The awareness that you're not doing well, after the deed is done, after cards have been swiped, after QRs have been scanned and money has been spent is useless and anxiety provoking.
+
+The awareness should be present before you swipe your card, or scan a QR code or write a cheque, so such actions can be consciously avoided.
+
+It's a blatant failure of our financial tools to not prioritise awareness. Perpetual Financial Awareness (not yet trademarked) is what we believe solves that anxiety. Fold is designed in a way that prioritises financial products, riddled with visual noise that grabs your attention with nails in all directions, we have created Fold, which not only delivers on its function but also in beauty and design.
+Another failure of our financial products is the lack of care. Finance in itself can be daunting, our tools don't need to be. But open any app and be ready to be dished out 20 options in 30 different colours. We want to stand out from that crowd by standing still. In the bustle of financial products, riddled with visual noise that grabs your attention with nails in all directions, we have created Fold, which not only delivers on its function but also in beauty and design.
+
+We wish for Fold to do its job and then get out of your way. We want you to come to Fold for value and function, not cashback or rewards.
+
+            </p>
+        </div>
+               
+        <div class="privacy-design">
+            <h2 class="subheading">Ethics Of Tracker</h2>
+            <p class="privacy-text">
+                The Fold you are using or will be using is the first of a suite of financial products that we are in the process of bringing to life. But their final coming to life depends on how good we are able to make this first one. We'll only know how we're doing by the feedback you provide, we read each mail that finds its way to the inbox feedback@fold.money.
+
+If you haven't downloaded Fold yet, please do, and tell us what you think. It'll be an honour and a privilege to be a small part of your financial life.
+            </p>
+            <p class="privacy-text">
+                Building a bulletproof system from the outset is hard work—more so for a small team like ours—but 
+                it’s not impossible. <em>Some of our most delightful features, the ones we love and you’re going 
+                to love the most depend on processing certain data</em>, we promise to be transparent about it, and 
+                about our privacy practices. Our Privacy Policy can be read <a href="#">here</a>.
+            </p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("theme-toggle");
+        const currentTheme = localStorage.getItem("theme");
+
+        if (currentTheme === "dark") {
+            document.body.classList.add("dark-theme");
+        }
+
+        themeToggle.addEventListener("click", function () {
+            document.body.classList.toggle("dark-theme");
+
+            if (document.body.classList.contains("dark-theme")) {
+                localStorage.setItem("theme", "dark");
+            } else {
+                localStorage.setItem("theme", "light");
+            }
+        });
+    });
+    </script>
+</body>
+</html>
